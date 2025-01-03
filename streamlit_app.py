@@ -90,7 +90,8 @@ with right_column:
                     st.session_state.chat_history.append({"role": "user", "content": user_input})
                     st.session_state.chat_history.append({"role": "assistant", "content": model_response})
                     # 清空输入框（通过 session_state 操作）
-                    st.session_state.user_input = ""
+                    if "user_input" not in st.session_state:
+                        st.session_state.user_input = ""  # 初始化输入内容
                 else:
                     st.warning("请输入有效的问题！")
         
