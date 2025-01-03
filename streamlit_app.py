@@ -18,10 +18,12 @@ left_column, right_column = st.columns([1, 2])
 # 左侧：数据上传区域
 with left_column:
     st.markdown("""
-        <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+        <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
             <h3 style="color: #333;">上传数据</h3>
             <p>请上传以下文件进行分析：</p>
+        </div>
     """, unsafe_allow_html=True)
+
 
     # 文件上传
     ct_file = st.file_uploader("上传 CT 图像", type=["jpg", "png", "jpeg", "dcm"])
@@ -39,8 +41,9 @@ with left_column:
 # 右侧：聊天窗口区域
 with right_column:
     st.markdown("""
-        <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-            <h3 style="color: #333;">聊天窗口</h3>
+        <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+            <h3 style="color: #333;">知识问答</h3>
+        </div>
     """, unsafe_allow_html=True)
 
     # 显示聊天历史
