@@ -49,18 +49,16 @@ with right_column:
             st.markdown(message["content"])
 
     # 用户输入框
-    st.session_state.user_input = st.text_input("请输入您的问题：", key="user_input")
+    user_input = st.text_input("请输入您的问题：", key="user_input")  # Save input to local variable
 
     # 按钮提交用户输入
     if st.button("发送"):
-        user_message = st.session_state.user_input.strip()
+        user_message = user_input.strip()  # Use the value stored in local variable
         if user_message:
             # 用户问题加入聊天历史
             st.session_state.chat_history.append({"role": "user", "content": user_message})
             # 模拟助手回答
             assistant_reply = f"您问了：{user_message}。这是模拟回答。"
             st.session_state.chat_history.append({"role": "assistant", "content": assistant_reply})
-            # 清空用户输入框
-            st.session_state.user_input = ""
 
     st.markdown("</div>", unsafe_allow_html=True)
