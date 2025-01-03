@@ -41,15 +41,12 @@ with right_column:
     st.markdown("""
         <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
             <h3 style="color: #333;">聊天窗口</h3>
-            <div id="chat-history" style="max-height: 400px; overflow-y: auto; margin-bottom: 50px;">
     """, unsafe_allow_html=True)
 
     # 显示聊天历史
     for message in st.session_state.chat_history:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
     # 用户输入框
     user_input = st.text_input("请输入您的问题：", key="user_input")  # Save input to local variable
@@ -64,20 +61,4 @@ with right_column:
             assistant_reply = f"您问了：{user_message}。这是模拟回答。"
             st.session_state.chat_history.append({"role": "assistant", "content": assistant_reply})
 
-    # 使用CSS固定输入框位置
-    st.markdown("""
-        <style>
-            /* 固定输入框在页面底部 */
-            .stTextInput {
-                position: fixed;
-                bottom: 0;
-                width: 80%;
-                margin: 0 10%;
-                z-index: 1;
-            }
-            /* 增加聊天框的滚动 */
-            #chat-history {
-                overflow-y: scroll;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
