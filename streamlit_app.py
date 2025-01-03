@@ -44,39 +44,37 @@ with right_column:
     """, unsafe_allow_html=True)
 
     # 聊天内容显示区域（固定高度，支持滚动）
-    chat_container = st.container()
-    with chat_container:
-        st.markdown("""
-            <div style="height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
-        """, unsafe_allow_html=True)
-        
-        # 展示聊天记录
-        for msg in st.session_state.chat_history:
-            if msg["role"] == "user":
-                st.markdown(f"""
-                    <div style="text-align: right; margin: 5px;">
-                        <div style="display: inline-block; background-color: #d1ecf1; padding: 10px; border-radius: 10px; max-width: 70%;">
-                            {msg["content"]}
-                        </div>
+    st.markdown("""
+        <div style="height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
+    """, unsafe_allow_html=True)
+
+    # 展示聊天记录
+    for msg in st.session_state.chat_history:
+        if msg["role"] == "user":
+            st.markdown(f"""
+                <div style="text-align: right; margin: 5px;">
+                    <div style="display: inline-block; background-color: #d1ecf1; padding: 10px; border-radius: 10px; max-width: 70%;">
+                        {msg["content"]}
                     </div>
-                """, unsafe_allow_html=True)
-            elif msg["role"] == "assistant":
-                st.markdown(f"""
-                    <div style="text-align: left; margin: 5px;">
-                        <div style="display: inline-block; background-color: #f8d7da; padding: 10px; border-radius: 10px; max-width: 70%;">
-                            {msg["content"]}
-                        </div>
+                </div>
+            """, unsafe_allow_html=True)
+        elif msg["role"] == "assistant":
+            st.markdown(f"""
+                <div style="text-align: left; margin: 5px;">
+                    <div style="display: inline-block; background-color: #f8d7da; padding: 10px; border-radius: 10px; max-width: 70%;">
+                        {msg["content"]}
                     </div>
-                """, unsafe_allow_html=True)
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+                </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # 固定在底部的输入框和发送按钮
     with st.container():
         st.markdown("""
             <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f9f9f9; padding: 10px; border-top: 1px solid #ddd;">
         """, unsafe_allow_html=True)
-        
+
         col1, col2 = st.columns([4, 1])
         with col1:
             # 设置输入框，确保值与 session_state 同步
@@ -94,5 +92,5 @@ with right_column:
                         st.session_state.user_input = ""  # 初始化输入内容
                 else:
                     st.warning("请输入有效的问题！")
-        
+
         st.markdown("</div>", unsafe_allow_html=True)
