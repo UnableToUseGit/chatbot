@@ -68,6 +68,10 @@ with right_column:
         
         st.markdown("</div>", unsafe_allow_html=True)
 
+    # 初始化 `user_input` 在 session_state 中的值
+    if "user_input" not in st.session_state:
+        st.session_state.user_input = ""
+    
     # 固定在底部的输入框和发送按钮
     with st.container():
         st.markdown("""
@@ -76,7 +80,7 @@ with right_column:
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            user_input = st.text_input("请输入您的问题：", key="user_input", label_visibility="collapsed")
+            user_input = st.text_input("请输入您的问题：", value=st.session_state.user_input, key="user_input", label_visibility="collapsed")
         with col2:
             if st.button("发送", key="send"):
                 if user_input.strip():
@@ -86,7 +90,7 @@ with right_column:
                     st.session_state.chat_history.append({"role": "user", "content": user_input})
                     st.session_state.chat_history.append({"role": "assistant", "content": model_response})
                     # 清空输入框
-                    st.session_state.user_input = ""
+                    st.session_state.user_input = ""  # 将输入框清空
                 else:
                     st.warning("请输入有效的问题！")
         
