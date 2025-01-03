@@ -39,29 +39,29 @@ with left_column:
 # 右侧：聊天窗口区域
 with right_column:
     st.markdown("""
-        <div style="background-color: #eef6ff; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-            <h3 style="color: #333;">胃癌知识问答</h3>
+        <div style="background-color: #f0f4f8; padding: 20px; border: 1px solid #ddd; border-radius: 12px;">
+            <h3 style="color: #333; font-size: 24px;">胃癌知识问答</h3>
     """, unsafe_allow_html=True)
 
     # 聊天内容显示区域
     st.markdown("""
-        <div style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
+        <div style="padding: 10px; border: 1px solid #ddd; border-radius: 12px; background-color: #fff; height: 450px; overflow-y: auto;">
     """, unsafe_allow_html=True)
 
     # 展示聊天记录
     for msg in st.session_state.chat_history:
         if msg["role"] == "user":
             st.markdown(f"""
-                <div style="text-align: right; margin: 5px;">
-                    <div style="display: inline-block; background-color: #d1ecf1; padding: 10px; border-radius: 10px; max-width: 70%;">
+                <div style="text-align: right; margin: 10px 0;">
+                    <div style="display: inline-block; background-color: #d1ecf1; padding: 12px 16px; border-radius: 20px; max-width: 70%; font-size: 16px; word-wrap: break-word;">
                         {msg["content"]}
                     </div>
                 </div>
             """, unsafe_allow_html=True)
         elif msg["role"] == "assistant":
             st.markdown(f"""
-                <div style="text-align: left; margin: 5px;">
-                    <div style="display: inline-block; background-color: #f8d7da; padding: 10px; border-radius: 10px; max-width: 70%;">
+                <div style="text-align: left; margin: 10px 0;">
+                    <div style="display: inline-block; background-color: #f8d7da; padding: 12px 16px; border-radius: 20px; max-width: 70%; font-size: 16px; word-wrap: break-word;">
                         {msg["content"]}
                     </div>
                 </div>
@@ -72,7 +72,7 @@ with right_column:
     # 固定在底部的输入框和发送按钮
     with st.container():
         st.markdown("""
-            <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f9f9f9; padding: 10px; border-top: 1px solid #ddd;">
+            <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f9f9f9; padding: 10px 15px; border-top: 1px solid #ddd;">
         """, unsafe_allow_html=True)
 
         col1, col2 = st.columns([4, 1])
