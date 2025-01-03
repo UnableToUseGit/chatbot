@@ -3,9 +3,11 @@ import streamlit as st
 # 页面配置
 st.set_page_config(layout="wide", page_title="胃癌领域大模型")
 
-# 初始化聊天历史
+# 初始化聊天历史和用户输入
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = [{"role": "assistant", "content": "您好！欢迎使用胃癌领域知识问答系统，我是您的助手，请问有什么可以帮助您？"}]
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""  # 初始化输入内容
 
 # 页面标题
 st.title("胃癌领域大模型平台")
@@ -78,7 +80,7 @@ with right_column:
         col1, col2 = st.columns([4, 1])
         with col1:
             # 设置输入框，确保值与 session_state 同步
-            user_input = st.text_input("请输入您的问题：", value="", key="user_input", label_visibility="collapsed")
+            user_input = st.text_input("请输入您的问题：", value=st.session_state.user_input, key="user_input", label_visibility="collapsed")
         with col2:
             if st.button("发送", key="send"):
                 if user_input.strip():
@@ -87,7 +89,7 @@ with right_column:
                     # 添加到聊天历史
                     st.session_state.chat_history.append({"role": "user", "content": user_input})
                     st.session_state.chat_history.append({"role": "assistant", "content": model_response})
-                    # 清空输入框（通过刷新页面实现）
+                    # 清空输入框（通过 session_state 操作）
                     st.session_state.user_input = ""
                 else:
                     st.warning("请输入有效的问题！")
