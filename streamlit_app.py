@@ -5,7 +5,11 @@ st.set_page_config(layout="wide", page_title="胃癌领域大模型")
 
 # 初始化聊天历史和用户输入
 if "chat_history" not in st.session_state:
-    st.session_state.chat_history = [{"role": "assistant", "content": "您好！欢迎使用胃癌领域知识问答系统，我是您的助手，请问有什么可以帮助您？"}]
+    st.session_state.chat_history = [{"role": "assistant", "content": "您好！欢迎使用胃癌领域知识问答系统，我是您的助手，请问有什么可以帮助您？"},
+                                     {"role": "user", "content": "什么是胃癌免疫治疗?"},
+                                    {"role": "assistant", "content": "胃癌免疫治疗是一种利用免疫系统的自然防御机制来治疗胃癌的方法。通过激活或增强患者的免疫系统，免疫治疗能够识别并攻击胃癌细胞。"},
+                                    {"role": "user", "content": "免疫治疗适合所有胃癌患者吗?"},
+                                    {"role": "assistant", "content": "免疫治疗并非适合所有胃癌患者。其效果通常与肿瘤的分子特征有关。例如，携带PD-L1高表达或微卫星不稳定（MSI-H）等标志物的胃癌患者可能更易从免疫治疗中受益。此外，免疫治疗往往适用于晚期或转移性胃癌患者，早期胃癌患者通常采用手术治疗为主。"},]
 if "user_input" not in st.session_state:
     st.session_state.user_input = ""  # 初始化输入内容
 
