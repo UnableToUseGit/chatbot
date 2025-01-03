@@ -10,7 +10,10 @@ if "user_input" not in st.session_state:
     st.session_state.user_input = ""  # 初始化输入内容
 
 # 页面标题
-st.title("胃癌领域大模型平台")
+# st.title("胃癌领域大模型平台")
+st.markdown("""
+    <h1 style="text-align: center; color: #333;">胃癌领域大模型平台</h1>
+""", unsafe_allow_html=True)
 
 # 两列布局
 left_column, right_column = st.columns([1, 2])
