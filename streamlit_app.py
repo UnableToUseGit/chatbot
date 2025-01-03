@@ -64,7 +64,16 @@ with right_column:
             # 用户问题加入聊天历史
             st.session_state.chat_history.append({"role": "user", "content": user_message})
             # 模拟助手回答
-            assistant_reply = f"您问了：{user_message}。这是模拟回答。"
+             # 对话规则：根据用户输入返回固定回复
+            if "什么是胃癌免疫治疗" in user_message:
+                assistant_reply = "胃癌免疫治疗是一种利用免疫系统的自然防御机制来治疗胃癌的方法。通过激活或增强患者的免疫系统，免疫治疗能够识别并攻击胃癌细胞。常见的免疫治疗方法包括免疫检查点抑制剂、细胞因子疗法和肿瘤疫苗。"
+            elif "免疫治疗适合所有胃癌患者吗？" in user_message:
+                assistant_reply = "免疫治疗并非适合所有胃癌患者。其效果通常与肿瘤的分子特征有关。例如，携带PD-L1高表达或微卫星不稳定（MSI-H）等标志物的胃癌患者可能更易从免疫治疗中受益。此外，免疫治疗往往适用于晚期或转移性胃癌患者，早期胃癌患者通常采用手术治疗为主。"
+            elif "你好" in user_message or "您好" in user_message:
+                assistant_reply = "您好！有什么问题我可以帮助解答吗？"
+            else:
+                assistant_reply = f"您问了：{user_message}。这是模拟回答。"
+                
             st.session_state.chat_history.append({"role": "assistant", "content": assistant_reply})
 
     st.markdown("</div>", unsafe_allow_html=True)
