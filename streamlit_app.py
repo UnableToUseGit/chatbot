@@ -43,9 +43,9 @@ with right_column:
             <h3 style="color: #333;">胃癌知识问答</h3>
     """, unsafe_allow_html=True)
 
-    # 聊天内容显示区域（固定高度，支持滚动）
+    # 聊天内容显示区域
     st.markdown("""
-        <div style="height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
+        <div style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
     """, unsafe_allow_html=True)
 
     # 展示聊天记录
