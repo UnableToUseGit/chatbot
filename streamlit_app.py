@@ -48,6 +48,7 @@ with right_column:
             <div style="height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
         """, unsafe_allow_html=True)
         
+        # 展示聊天记录
         for msg in st.session_state.chat_history:
             if msg["role"] == "user":
                 st.markdown(f"""
@@ -68,10 +69,6 @@ with right_column:
         
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # 初始化 `user_input` 在 session_state 中的值
-    if "user_input" not in st.session_state:
-        st.session_state.user_input = ""
-    
     # 固定在底部的输入框和发送按钮
     with st.container():
         st.markdown("""
@@ -80,7 +77,8 @@ with right_column:
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            user_input = st.text_input("请输入您的问题：", value=st.session_state.user_input, key="user_input", label_visibility="collapsed")
+            # 设置输入框，确保值与 session_state 同步
+            user_input = st.text_input("请输入您的问题：", value="", key="user_input", label_visibility="collapsed")
         with col2:
             if st.button("发送", key="send"):
                 if user_input.strip():
@@ -89,8 +87,8 @@ with right_column:
                     # 添加到聊天历史
                     st.session_state.chat_history.append({"role": "user", "content": user_input})
                     st.session_state.chat_history.append({"role": "assistant", "content": model_response})
-                    # 清空输入框
-                    st.session_state.user_input = ""  # 将输入框清空
+                    # 清空输入框（通过刷新页面实现）
+                    st.session_state.user_input = ""
                 else:
                     st.warning("请输入有效的问题！")
         
