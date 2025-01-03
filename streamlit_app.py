@@ -1,56 +1,47 @@
 import streamlit as st
-from openai import OpenAI
 
-# Show title and description.
-st.title("💬 Chatbot")
-st.write(
-    "This is a simple chatbot that uses OpenAI's GPT-3.5 model to generate responses. "
-    "To use this app, you need to provide an OpenAI API key, which you can get [here](https://platform.openai.com/account/api-keys). "
-    "You can also learn how to build this app step by step by [following our tutorial](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps)."
-)
+# 页面布局
+st.set_page_config(layout="wide", page_title="胃癌领域大模型")
 
-# Ask user for their OpenAI API key via `st.text_input`.
-# Alternatively, you can store the API key in `./.streamlit/secrets.toml` and access it
-# via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.", icon="🗝️")
-else:
+# 标题
+st.title("胃癌领域大模型平台")
 
-    # Create an OpenAI client.
-    client = OpenAI(api_key=openai_api_key)
+# 分两列布局
+left_column, right_column = st.columns([1, 2])
 
-    # Create a session state variable to store the chat messages. This ensures that the
-    # messages persist across reruns.
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+# 左侧：数据上传
+with left_column:
+    st.header("上传数据")
+    st.write("请上传以下文件进行分析：")
+    
+    ct_file = st.file_uploader("上传 CT 图像", type=["jpg", "png", "jpeg", "dcm"])
+    pathology_file = st.file_uploader("上传病理图像", type=["jpg", "png", "jpeg"])
+    case_file = st.file_uploader("上传病例信息", type=["pdf", "txt"])
+    
+    if st.button("提交分析"):
+        if ct_file or pathology_file or case_file:
+            st.success("数据已提交，正在分析中...")
+            # 在此处调用你的分析模型逻辑
+        else:
+            st.warning("请至少上传一项数据后再提交！")
 
-    # Display the existing chat messages via `st.chat_message`.
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    # Create a chat input field to allow the user to enter a message. This will display
-    # automatically at the bottom of the page.
-    if prompt := st.chat_input("What is up?"):
-
-        # Store and display the current prompt.
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        # Generate a response using the OpenAI API.
-        stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
-
-        # Stream the response to the chat using `st.write_stream`, then store it in 
-        # session state.
-        with st.chat_message("assistant"):
-            response = st.write_stream(stream)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+# 右侧：问答区域
+with right_column:
+    st.header("胃癌知识问答")
+    chat_history = st.session_state.get("chat_history", [])
+    
+    # 展示历史对话
+    for msg in chat_history:
+        st.write(msg)
+    
+    # 输入框与发送按钮
+    user_input = st.text_input("请输入问题：", key="user_input")
+    if st.button("发送"):
+        if user_input.strip():
+            # 假设调用胃癌领域大模型得到答案
+            model_response = f"这是模型针对问题“{user_input}”的回答。"
+            chat_history.append(f"用户：{user_input}")
+            chat_history.append(f"模型：{model_response}")
+            st.session_state.chat_history = chat_history
+        else:
+            st.warning("请输入有效的问题后再发送！")
